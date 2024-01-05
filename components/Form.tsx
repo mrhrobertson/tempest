@@ -1,17 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Form() {
-  var [amount, setAmount] = useState(1);
-  var [period, setPeriod] = useState("hour");
+  var init_date = new Date(Date.now());
+
+  var [amount, setAmount] = useState<number>(0);
+  var [period, setPeriod] = useState<string>("hour");
+  var [date, setDate] = useState<string>(init_date.toUTCString());
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  },[])
+
+  const time = new Map<string, number>([["hour", 3600], ["day", 86400], ["week", 604800]])
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
+    var new_date = new Date((Date.now() + (amount * (time.get(period)! * 1000)))).toUTCString()
+    setDate(new_date);
   };
 
   const handlePeriodChange = (e) => {
     setPeriod(e.target.value);
+    var new_date = new Date((Date.now() + (amount * (time.get(period)! * 1000)))).toUTCString()
+    setDate(new_date);
   };
 
   return (
@@ -56,6 +69,7 @@ export default function Form() {
           </select>
         </div>
       </div>
+      <p>This link will expiry on the {hydrated && date}</p>
     </form>
   );
 }
