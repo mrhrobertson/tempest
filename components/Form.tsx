@@ -28,16 +28,16 @@ export default function Form() {
   };
 
   return (
-    <form action={submit} className="flex flex-col items-center p-4 rounded-2xl gap-4 bg-zinc-300 dark:bg-zinc-800">
+    <div className="flex flex-col items-center w-1/3 p-4 rounded-2xl gap-4 bg-zinc-300 dark:bg-zinc-800">
+    <form action={submit} className="flex flex-col items-center w-full rounded-2xl gap-4 bg-zinc-300 dark:bg-zinc-800">
       <h1>Share what you want!</h1>
       <textarea
         id="content"
         rows={4}
-        cols={45}
         placeholder="Type to your hearts content..."
-        className="bg-zinc-100 dark:bg-zinc-900 rounded-lg p-4"
+        className="bg-zinc-100 dark:bg-zinc-900 rounded-lg p-4 w-full"
       ></textarea>
-      <div className="flex gap-4 w-full">
+      <div className="flex flex-col lg:flex-row gap-4 w-full">
         <button type="submit" className="flex-grow px-4 py-2 bg-blue-500 text-white rounded-lg">
           Generate Link
         </button>
@@ -70,7 +70,8 @@ export default function Form() {
           </select>
         </div>
       </div>
-      <p>This link will expiry on the {date}</p>
     </form>
+    <p>This link will expiry on the {date}</p>
+    </div>
   );
 }
