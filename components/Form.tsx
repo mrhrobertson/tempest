@@ -33,7 +33,7 @@ export default function Form() {
     setLink("");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     const payload = { content, amount, period };
@@ -82,7 +82,7 @@ export default function Form() {
         <textarea
           id="content"
           rows={4}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e: any) => setContent(e.target.value)}
           value={content}
           placeholder="Type to your hearts content..."
           className="bg-zinc-100 dark:bg-zinc-900 rounded-lg p-4 w-full"
@@ -100,7 +100,7 @@ export default function Form() {
               className="rounded-l-md h-full items-center text-center py-4 text-black dark:text-white dark:bg-zinc-900"
               id="amount"
               type="number"
-              onChange={(e) => setAmount(parseInt(e.target.value))}
+              onChange={(e: any) => setAmount(parseInt(e.target.value))}
               min={1}
               max={
                 period == "h" ? 24 : period == "d" ? 30 : period == "w" ? 12 : 1
@@ -110,7 +110,7 @@ export default function Form() {
             <select
               className="rounded-r-md h-full items-center text-center py-4 flex-grow text-black dark:text-white dark:bg-zinc-900"
               id="period"
-              onChange={(e) => setPeriod(e.target.value)}
+              onChange={(e: any) => setPeriod(e.target.value)}
               value={period}
             >
               <option value="h">hour{amount > 1 ? "s" : ""}</option>
