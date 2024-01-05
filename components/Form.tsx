@@ -1,75 +1,76 @@
 "use client";
 
+import moment from "moment";
 import { useEffect, useState } from "react";
+import { submit } from "@/app/actions";
 
 export default function Form() {
   var init_date = new Date(Date.now());
 
-  var [amount, setAmount] = useState<number>(0);
-  var [period, setPeriod] = useState<string>("hour");
-  var [date, setDate] = useState<string>(init_date.toUTCString());
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => {
-    setHydrated(true);
-  },[])
-
-  const time = new Map<string, number>([["hour", 3600], ["day", 86400], ["week", 604800]])
+  var [amount, setAmount] = useState<number>(1);
+  var [period, setPeriod] = useState<string>("h");
+  var [date, setDate] = useState<string>(moment().add(amount, period as moment.unitOfTime.DurationConstructor).format('LLLL'));
 
   const handleAmountChange = (e) => {
+    console.log(e.target.value, amount, period)
     setAmount(e.target.value);
-    var new_date = new Date((Date.now() + (amount * (time.get(period)! * 1000)))).toUTCString()
+    console.log(e.target.value, amount, period)
+    var new_date : string = moment().add(e.target.value, period as moment.unitOfTime.DurationConstructor).format('LLLL');
     setDate(new_date);
   };
 
   const handlePeriodChange = (e) => {
+    console.log(e.target.value, amount, period)
     setPeriod(e.target.value);
-    var new_date = new Date((Date.now() + (amount * (time.get(period)! * 1000)))).toUTCString()
+    console.log(e.target.value, amount, period)
+    var new_date : string = moment().add(amount, e.target.value as moment.unitOfTime.DurationConstructor).format('LLLL');
     setDate(new_date);
   };
 
   return (
-    <form className="flex flex-col items-center p-4 rounded-2xl gap-4 bg-zinc-300 dark:bg-zinc-800">
+    <form action={submit} className="flex flex-col items-center p-4 rounded-2xl gap-4 bg-zinc-300 dark:bg-zinc-800">
       <h1>Share what you want!</h1>
       <textarea
+        id="content"
         rows={4}
         cols={45}
         placeholder="Type to your hearts content..."
         className="bg-zinc-100 dark:bg-zinc-900 rounded-lg p-4"
       ></textarea>
       <div className="flex gap-4 w-full">
-        <button className="flex-grow px-4 py-2 bg-blue-500 text-white rounded-lg">
+        <button type="submit" className="flex-grow px-4 py-2 bg-blue-500 text-white rounded-lg">
           Generate Link
         </button>
         <div className="flex w-1/3">
           <input
-            className="rounded-l-md h-full items-center text-center w-1/3 text-black"
+            className="rounded-l-md h-full items-center text-right w-1/3 text-black"
             id="amount"
             type="number"
-            onChange={handleAmountChange}
+            onClick={handleAmountChange}
             min={1}
             max={
-              period == "hour"
+              period == "h"
                 ? 24
-                : period == "day"
+                : period == "d"
                 ? 30
-                : period == "week"
+                : period == "w"
                 ? 12
                 : 1
             }
             defaultValue={1}
           />
           <select
-            className="rounded-r-md h-full items-center flex-grow text-black text-center"
-            name="periods"
+            className="rounded-r-md h-full items-center flex-grow text-black text-left"
+            id="period"
             onChange={handlePeriodChange}
           >
-            <option value="hour">hour{amount > 1 ? "s" : ""}</option>
-            <option value="day">day{amount > 1 ? "s" : ""}</option>
-            <option value="week">week{amount > 1 ? "s" : ""}</option>
+            <option value="h">hour{amount > 1 ? "s" : ""}</option>
+            <option value="d">day{amount > 1 ? "s" : ""}</option>
+            <option value="w">week{amount > 1 ? "s" : ""}</option>
           </select>
         </div>
       </div>
-      <p>This link will expiry on the {hydrated && date}</p>
+      <p>This link will expiry on the {date}</p>
     </form>
   );
 }
