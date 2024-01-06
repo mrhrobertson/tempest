@@ -32,7 +32,7 @@ export default function Page() {
       <div className="flex flex-col items-center justify-center w-1/4 p-4 rounded-2xl gap-4 bg-zinc-300 dark:bg-zinc-800">
         {reveal && message ? (
           <div className="flex flex-col w-full gap-4 items-center">
-            <h1>Here's the content!</h1>
+            <h1>Here&apos;s the content!</h1>
             <div className="flex flex-col md:flex-row gap-4 md:gap-0 w-full">
               <span
                 style={scp.style}
@@ -73,7 +73,7 @@ export default function Page() {
             <h1>Do you wish to reveal the content of this link?</h1>
             <p className="flex items-center text-center w-full p-4 rounded-lg bg-red-500 text-white text-sm">
               Once you click through, the data will be deleted from the servers
-              and won't be viewable again.
+              and won&apos;t be viewable again.
             </p>
             <button
               onClick={handleReveal}
