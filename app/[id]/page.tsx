@@ -49,7 +49,7 @@ export default function Page() {
               </button>
             </div>
             <Link
-              className="flex-grow px-4 py-4 md:py-2 w-full bg-blue-500 text-zinc-50 text-center rounded-lg"
+              className="flex-grow px-4 py-2 w-full bg-blue-500 text-zinc-50 text-center rounded-lg"
               href="/"
             >
               Generate Link
@@ -62,7 +62,7 @@ export default function Page() {
               To generate your own link, click below.
             </p>
             <Link
-              className="px-4 py-4 md:py-2 w-full bg-zinc-50 hover:bg-zinc-500 hover:text-zinc-50 active:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:active:bg-zinc-700 rounded-lg text-center"
+              className="px-4 py-2 w-full bg-zinc-50 hover:bg-zinc-500 hover:text-zinc-50 active:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:active:bg-zinc-700 rounded-lg text-center"
               href="/"
             >
               Generate Link
@@ -77,7 +77,7 @@ export default function Page() {
             </p>
             <button
               onClick={handleReveal}
-              className="px-4 py-4 md:py-2 w-full bg-zinc-50 hover:bg-zinc-500 hover:text-zinc-50 active:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:active:bg-zinc-700 rounded-lg"
+              className="px-4 py-2 w-full bg-zinc-50 hover:bg-zinc-500 hover:text-zinc-50 active:bg-zinc-400 dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:active:bg-zinc-700 rounded-lg"
             >
               <span>Reveal Secret</span>
             </button>
