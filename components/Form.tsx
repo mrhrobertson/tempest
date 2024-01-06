@@ -49,7 +49,7 @@ export default function Form() {
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 w-full">
           <span
             style={scp.style}
-            className="text-xs p-4 bg-zinc-900 rounded-lg md:rounded-e-none md:rounded-s-lg w-full md:w-11/12 select-all"
+            className="text-xs p-4 bg-zinc-900 rounded-lg md:rounded-e-none md:rounded-s-lg w-full md:w-11/12 select-all break-words"
           >
             {link}
           </span>
@@ -91,13 +91,13 @@ export default function Form() {
           <button
             type="submit"
             disabled={loading}
-            className="flex-grow px-4 py-4 md:py-2 bg-blue-500 text-white rounded-lg"
+            className="flex-grow md:flex-none lg:w-3/4 w-full px-4 py-2 bg-blue-500 text-white rounded-lg"
           >
             {loading ? <span>Generating...</span> : <span>Generate Link</span>}
           </button>
-          <div className="flex w-full lg:w-1/2">
+          <div className="flex w-full lg:w-1/2 items-center">
             <input
-              className="rounded-l-md h-full items-center text-center py-4 text-black dark:text-white dark:bg-zinc-900"
+              className="rounded-l-md h-full items-center text-center p-2 text-black dark:text-white dark:bg-zinc-900"
               id="amount"
               type="number"
               onChange={(e: any) => setAmount(parseInt(e.target.value))}
@@ -108,7 +108,7 @@ export default function Form() {
               value={amount}
             />
             <select
-              className="rounded-r-md h-full items-center text-center py-4 flex-grow text-black dark:text-white dark:bg-zinc-900"
+              className="rounded-r-md h-full items-center text-center p-2 flex-grow text-black dark:text-white dark:bg-zinc-900"
               id="period"
               onChange={(e: any) => setPeriod(e.target.value)}
               value={period}

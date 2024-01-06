@@ -1,38 +1,74 @@
 "use server";
 
-import { Furnace } from "@mrhrobertson/furnace";
+import { Furnace, toBase64URL, toUint8Array } from "@mrhrobertson/furnace";
 import { randomBytes, randomUUID } from "crypto";
 import { createClient } from "redis";
 
-type Payload = {
+type SubmitPayload = {
   content: string;
   amount: number;
   period: string;
 };
 
-type Response = {
-  tokenID: string;
+type RevealPayload = {
+  uuid: string;
   key: string;
 };
 
-export async function submit(data: Payload) {
+type DecodeResponse = {
+  token: string;
+  amount: number;
+  period: string;
+};
+
+const TIME_CONVERSION: { [id: string]: number } = {
+  h: 3600,
+  d: 86400,
+  w: 604800,
+};
+
+export async function submit(payload: SubmitPayload) {
   const key = new Uint8Array(randomBytes(32));
   const furnace = new Furnace(key);
-  const token = furnace.encode(data.content);
-  console.log(
-    `Key: ${furnace.toBase64URL(key)} | Token: ${furnace.toBase64URL(token)}`
-  );
-  /*const client = createClient({
-    url: process.env.REDIS_URL ? process.env.REDIS_URL : "localhost:6379",
-  });*/
+  const token = furnace.encode(payload.content);
+  console.log(`Key: ${toBase64URL(key)} | Token: ${toBase64URL(token)}`);
+  const client = createClient({
+    url: process.env.REDIS_URL
+      ? process.env.REDIS_URL
+      : "redis://localhost:6379",
+  });
   const uuid = randomUUID();
-  const keyB64 = furnace.toBase64URL(key);
-  /*await client.connect();
-  await client.json.set(`tempest:${uuid}`, "$", {
-    token: furnace.toBase64URL(token),
-    amount: data.amount,
-    period: data.period,
-    key: keyB64,
-  });*/
+  const keyB64 = toBase64URL(key);
+  await client.connect();
+  await client.set(
+    `tempest:${uuid}`,
+    JSON.stringify({
+      token: toBase64URL(token),
+      amount: payload.amount,
+      period: payload.period,
+    })
+  );
+  await client.disconnect();
   return `${uuid}~${keyB64}`;
+}
+
+export async function revealSecret(payload: RevealPayload) {
+  const key = toUint8Array(payload.key);
+  const furnace = new Furnace(key);
+  const client = createClient({
+    url: process.env.REDIS_URL
+      ? process.env.REDIS_URL
+      : "redis://localhost:6379",
+  });
+  await client.connect();
+  const res = await client.get(`tempest:${payload.uuid}`);
+  await client.del(`tempest:${payload.uuid}`);
+  if (res) {
+    const json: DecodeResponse = JSON.parse(res);
+    console.log(json, TIME_CONVERSION[json.period] * 1000 * json.amount);
+    return furnace.decode(
+      toUint8Array(json.token),
+      TIME_CONVERSION[json.period] * 1000 * json.amount
+    );
+  } else return null;
 }
