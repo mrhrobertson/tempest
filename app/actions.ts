@@ -35,6 +35,8 @@ export async function submit(payload: SubmitPayload) {
   const client = createClient({
     url: process.env.REDIS_URL
       ? process.env.REDIS_URL
+      : process.env.KV_URL
+      ? process.env.KV_URL
       : "redis://localhost:6379",
   });
   const uuid = randomUUID();
@@ -58,11 +60,14 @@ export async function revealSecret(payload: RevealPayload) {
   const client = createClient({
     url: process.env.REDIS_URL
       ? process.env.REDIS_URL
+      : process.env.KV_URL
+      ? process.env.KV_URL
       : "redis://localhost:6379",
   });
   await client.connect();
   const res = await client.get(`tempest:${payload.uuid}`);
   await client.del(`tempest:${payload.uuid}`);
+  await client.disconnect();
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
     console.log(json, TIME_CONVERSION[json.period] * 1000 * json.amount);
