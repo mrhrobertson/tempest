@@ -95,7 +95,7 @@ export default function Form() {
           </button>
           <div className="flex w-full lg:w-1/2 items-center">
             <input
-              className="rounded-l-md h-full items-center text-center p-2 text-zinc-900 dark:text-zinc-50 dark:bg-zinc-900"
+              className="rounded-l-md items-center text-center p-2 text-zinc-900 dark:text-zinc-50 dark:bg-zinc-900"
               id="amount"
               type="number"
               onChange={(e: any) => setAmount(parseInt(e.target.value))}
@@ -106,7 +106,7 @@ export default function Form() {
               value={amount}
             />
             <select
-              className="rounded-r-md h-full items-center text-center p-2 flex-grow text-zinc-900 dark:text-zinc-50 dark:bg-zinc-900"
+              className="rounded-r-md items-center text-center p-2 appearance-none flex-grow text-zinc-900 dark:text-zinc-50 dark:bg-zinc-900"
               id="period"
               onChange={(e: any) => setPeriod(e.target.value)}
               value={period}
