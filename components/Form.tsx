@@ -65,7 +65,7 @@ export default function Form() {
         type="submit"
         disabled={loading}
         onClick={() => resetValues()}
-        className="flex-grow px-4 py-4 md:py-2 w-full bg-blue-500 text-zinc-50 rounded-lg"
+        className="flex-grow px-4 py-2 w-full bg-blue-500 text-zinc-50 rounded-lg"
       >
         <span>Generate New Link</span>
       </button>
