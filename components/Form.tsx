@@ -118,7 +118,7 @@ export default function Form() {
           </div>
         </div>
       </form>
-      <p>This link will expiry on the {date.format("LLLL")}</p>
+      <p className="text-center">This link will expiry on the {date.format("LLLL")}</p>
     </div>
   );
 }
