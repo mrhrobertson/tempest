@@ -22,7 +22,7 @@ export default function Page() {
     e.preventDefault();
     setReveal(false);
     const payload = { uuid, key };
-    const res: string | undefined = await revealSecret(payload);
+    const res: string | null = await revealSecret(payload);
     setMessage(res!);
     setReveal(true);
   };
