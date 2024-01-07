@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./cfg/core/:./config:ro
+      - ./cfg/core/:./app/config:ro
     environment:
       - NO_TLS=true
     restart: always
