@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { Source_Code_Pro } from "next/font/google";
 import { submit } from "@/app/actions";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
-import strings from "@/public/config/strings.json";
-import theme from "@/public/config/theme.json";
+import strings from "../public/config/strings.json";
+import theme from "../public/config/theme.json";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
