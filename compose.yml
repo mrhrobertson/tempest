@@ -1,0 +1,24 @@
+name: tempest
+
+services:
+  core:
+    image: tempest:latest
+    container_name: core
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./cfg/core/:./config:ro
+    environment:
+      - NO_TLS=true
+    restart: always
+    depends_on:
+      - db
+      - proxy
+  db:
+    image: redis:latest
+    container_name: db
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_DISABLE_COMMANDS=KEYS,FLUSHDB,FLUSHALL
+    restart: always

@@ -33,7 +33,7 @@ const REDIS_CFG = {
     : process.env.KV_URL
     ? process.env.KV_URL
     : "redis://localhost:6379",
-  socket: { tls: process.env.NO_SSL ? process.env.NO_SSL : true },
+  socket: { tls: process.env.TLS ? process.env.TLS : true },
 };
 
 export async function submit(payload: SubmitPayload) {

@@ -1,0 +1,26 @@
+{
+  "generic": {
+    "generate": "Generate Link",
+    "copy": "Copy to Clipboard",
+    "reveal": "Reveal Secret"
+  },
+  "generate": {
+    "head": "Share a secret!",
+    "place": "Type in here...",
+    "clicked": "Generating..."
+  },
+  "generated": {
+    "head": "Your link has been generated!"
+  },
+  "reveal": {
+    "head": "Do you wish to reveal the content of this link?",
+    "warning": "Once you click through, the data will be deleted from the servers and won't be viewable again."
+  },
+  "revealed": {
+    "head": "Here's the content!"
+  },
+  "invalid": {
+    "head": "The link has either expired or invalid.",
+    "warning": "To generate your own link, click below."
+  }
+}
