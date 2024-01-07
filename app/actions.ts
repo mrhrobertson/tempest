@@ -68,7 +68,7 @@ export async function revealSecret(payload: RevealPayload) {
     const json: DecodeResponse = JSON.parse(res);
     return furnace.decode(
       toUint8Array(json.token),
-      TIME_CONVERSION[json.period] * 1000 * json.amount
+      TIME_CONVERSION[json.period] * json.amount
     );
   } else return null;
 }
