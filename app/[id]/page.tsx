@@ -6,8 +6,7 @@ import { useState } from "react";
 import { revealSecret } from "@/app/actions";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import { Source_Code_Pro } from "next/font/google";
-import strings from "@/public/config/strings.json";
-import theme from "@/public/config/theme.json";
+import strings from "@/config/strings.json";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -31,10 +30,10 @@ export default function Page() {
 
   return (
     <main
-      className={`flex min-h-screen w-full flex-col items-center justify-center p-8 text-${theme.text.light} dark:text-${theme.text.dark} bg-${theme.bg.main.light} dark:bg-${theme.bg.main.dark}`}
+      className={`flex min-h-screen w-full flex-col items-center justify-center p-8 text-light dark:text-dark bg-main-light dark:bg-main-dark`}
     >
       <div
-        className={`flex flex-col items-center justify-center w-full md:w-1/2 lg:w-2/5 lg:max-w-4/5 p-4 rounded-2xl gap-4 bg-${theme.bg.container.light} dark:bg-${theme.bg.container.dark}`}
+        className={`flex flex-col items-center justify-center w-full md:w-1/2 lg:w-2/5 lg:max-w-4/5 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark`}
       >
         {reveal && message ? (
           <div className="flex flex-col w-full gap-4 items-center">
@@ -42,20 +41,20 @@ export default function Page() {
             <div className="flex flex-col md:flex-row gap-4 md:gap-0 w-full">
               <span
                 style={scp.style}
-                className={`text-xs text-zinc-50 p-4 bg-${theme.bg.display.light} dark:bg-${theme.bg.display.dark} rounded-lg md:rounded-e-none md:rounded-s-lg w-full md:w-5/6 select-all break-words`}
+                className={`text-xs text-dark p-4 bg-display-light dark:bg-display-dark rounded-lg md:rounded-e-none md:rounded-s-lg w-full md:w-5/6 select-all break-words`}
               >
                 {message}
               </span>
               <button
                 onClick={() => navigator.clipboard.writeText(message)}
-                className={`flex gap-2 bg-${theme.button.secondary.light} dark:bg-${theme.button.secondary.dark} text-${theme.button.secondary.text.light} dark:text-${theme.button.secondary.text.dark} hover:bg-${theme.button.secondary.hover.light} dark:hover:bg-${theme.button.secondary.hover.dark} hover:text-${theme.button.secondary.hover.text.light} dark:hover:text-${theme.button.secondary.hover.text.dark} active:bg-${theme.button.secondary.active.light} dark:active:bg-${theme.button.secondary.active.dark} active:text-${theme.button.secondary.active.text.light} dark:active:text-${theme.button.secondary.active.text.dark} rounded-lg md:rounded-e-lg md:rounded-s-none w-full md:w-2/12 py-2 items-center justify-center`}
+                className={`flex gap-2 bg-secondary-light dark:bg-secondary-dark text-secondary-text-light dark:text-secondary-text-dark hover:bg-secondary-hover-light dark:hover:bg-secondary-hover-dark hover:text-secondary-text-light dark:hover:text-secondary-text-dark active:bg-secondary-active-light dark:active:bg-secondary-active-dark active:text-secondary-active-text-light dark:active:text-secondary-active-text-dark rounded-lg md:rounded-e-lg md:rounded-s-none w-full md:w-2/12 py-2 items-center justify-center`}
               >
                 <DocumentDuplicateIcon className="w-5 h-5" />
                 <span className="block md:hidden">{strings.generic.copy}</span>
               </button>
             </div>
             <Link
-              className={`flex-grow px-4 py-4 md:py-2 w-full bg-${theme.button.primary.light} dark:bg-${theme.button.primary.dark} text-${theme.button.primary.text.light} dark:text-${theme.button.primary.text.dark} hover:bg-${theme.button.primary.hover.light} dark:hover:bg-${theme.button.primary.hover.dark} hover:text-${theme.button.primary.hover.text.light} dark:hover:text-${theme.button.primary.hover.text.dark} active:bg-${theme.button.primary.active.light} dark:active:bg-${theme.button.primary.active.dark} active:text-${theme.button.primary.active.text.light} dark:active:text-${theme.button.primary.active.text.dark} text-center rounded-lg`}
+              className={`flex-grow px-4 py-4 md:py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark text-center rounded-lg`}
               href="/"
             >
               {strings.generic.generate}
@@ -64,11 +63,11 @@ export default function Page() {
         ) : reveal && !message ? (
           <div className="flex flex-col w-full gap-4 items-center">
             <h1>{strings.invalid.head}</h1>
-            <p className="w-full p-4 rounded-lg text-center bg-red-500 text-zinc-50 text-sm">
+            <p className="w-full p-4 rounded-lg text-center bg-warning text-dark text-sm">
               {strings.invalid.warning}
             </p>
             <Link
-              className={`px-4 py-4 md:py-2 w-full bg-${theme.button.primary.light} dark:bg-${theme.button.primary.dark} text-${theme.button.primary.text.light} dark:text-${theme.button.primary.text.dark} hover:bg-${theme.button.primary.hover.light} dark:hover:bg-${theme.button.primary.hover.dark} hover:text-${theme.button.primary.hover.text.light} dark:hover:text-${theme.button.primary.hover.text.dark} active:bg-${theme.button.primary.active.light} dark:active:bg-${theme.button.primary.active.dark} active:text-${theme.button.primary.active.text.light} dark:active:text-${theme.button.primary.active.text.dark} rounded-lg text-center`}
+              className={`px-4 py-4 md:py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark rounded-lg text-center`}
               href="/"
             >
               {strings.generic.generate}
@@ -77,12 +76,12 @@ export default function Page() {
         ) : (
           <div className="flex flex-col gap-4 w-full items-center">
             <h1>{strings.reveal.head}</h1>
-            <p className="flex items-center justify-center text-center w-full p-4 rounded-lg bg-red-500 text-zinc-50 text-sm">
+            <p className="flex items-center justify-center text-center w-full p-4 rounded-lg bg-warning text-dark text-sm">
               {strings.reveal.warning}
             </p>
             <button
               onClick={handleReveal}
-              className={`px-4 py-4 md:py-2 w-full bg-${theme.button.secondary.light} dark:bg-${theme.button.secondary.dark} text-${theme.button.secondary.text.light} dark:text-${theme.button.secondary.text.dark} hover:bg-${theme.button.secondary.hover.light} dark:hover:bg-${theme.button.secondary.hover.dark} hover:text-${theme.button.secondary.hover.text.light} dark:hover:text-${theme.button.secondary.hover.text.dark} active:bg-${theme.button.secondary.active.light} dark:active:bg-${theme.button.secondary.active.dark} active:text-${theme.button.secondary.active.text.light} dark:active:text-${theme.button.secondary.active.text.dark} rounded-lg`}
+              className={`px-4 py-4 md:py-2 w-full bg-secondary-light dark:bg-secondary-dark text-secondary-text-light dark:text-secondary-text-dark hover:bg-secondary-hover-light dark:hover:bg-secondary-hover-dark hover:text-secondary-text-dark dark:hover:text-secondary-text-dark active:bg-secondary-active-light dark:active:bg-secondary-active-dark active:text-secondary-active-text-light dark:active:text-secondary-active-text-dark rounded-lg`}
             >
               <span>{strings.generic.reveal}</span>
             </button>
