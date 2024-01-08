@@ -69,7 +69,6 @@ export async function revealSecret(payload: RevealPayload) {
   await client.disconnect();
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
-    await client.del(`tempest:${payload.uuid}`);
     try {
       var decoded = furnace.decode(
         toUint8Array(json.token),
@@ -78,6 +77,7 @@ export async function revealSecret(payload: RevealPayload) {
     } catch (error) {
       return null;
     }
+    await client.del(`tempest:${payload.uuid}`);
     return decoded;
   } else return null;
 }
