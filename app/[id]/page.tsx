@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { revealSecret } from "@/app/actions";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import { Source_Code_Pro } from "next/font/google";
@@ -20,6 +20,16 @@ export default function Page() {
   );
   const [key, setKey] = useState<string>(usePathname().split("~")[1]);
   const [message, setMessage] = useState<string>("");
+  const [theme, setTheme] = useState<string>();
+
+  useEffect(() => {
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => e.matches && setTheme("dark"));
+    window
+      .matchMedia("(prefers-color-scheme: light)")
+      .addEventListener("change", (e) => e.matches && setTheme("light"));
+  });
 
   const handleReveal = async (e: any) => {
     e.preventDefault();
@@ -40,7 +50,7 @@ export default function Page() {
         {strings.generic.logo &&
         strings.generic.logo.href.dark !== "" &&
         strings.generic.logo.href.light !== "" ? (
-          /*<Image
+          <Image
             src={
               theme === "dark"
                 ? strings.generic.logo.href.dark
@@ -50,7 +60,7 @@ export default function Page() {
             width={strings.generic.logo.size}
             height={strings.generic.logo.size}
             className="mb-2"
-          />*/
+          />
         ) : (
           ""
         )}
