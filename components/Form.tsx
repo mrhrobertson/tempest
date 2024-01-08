@@ -43,7 +43,7 @@ export default function Form() {
 
   return link ? (
     <main
-      className={`flex min-h-screen w-full flex-col items-center justify-center text-light dark:text-dark bg-main-light dark:bg-main-dark`}
+      className={`flex min-h-screen w-full p-8 flex-col items-center justify-center text-light dark:text-dark bg-main-light dark:bg-main-dark`}
     >
       <div
         className={`flex flex-col items-center justify-center w-full sm:w-3/4 lg:w-1/2 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark`}
@@ -79,7 +79,7 @@ export default function Form() {
     </main>
   ) : (
     <main
-      className={`flex min-h-screen w-full flex-col items-center justify-center text-light dark:text-dark bg-main-light dark:bg-main-dark`}
+      className={`flex min-h-screen w-full p-8 flex-col items-center justify-center text-light dark:text-dark bg-main-light dark:bg-main-dark`}
     >
       <div className="flex flex-col items-center sm:3/4 lg:w-1/2 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark">
         <h1>{strings.generate.head}</h1>
