@@ -80,5 +80,8 @@ export async function revealSecret(payload: RevealPayload) {
     await client.del(`tempest:${payload.uuid}`);
     await client.disconnect();
     return decoded;
-  } else return null;
+  } else {
+    await client.disconnect();
+    return null; 
+  }
 }
