@@ -66,7 +66,6 @@ export async function revealSecret(payload: RevealPayload) {
   } catch (e) {
     return null;
   }
-  await client.disconnect();
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
     try {
@@ -75,9 +74,14 @@ export async function revealSecret(payload: RevealPayload) {
         TIME_CONVERSION[json.period] * json.amount
       );
     } catch (error) {
+      await client.disconnect();
       return null;
     }
     await client.del(`tempest:${payload.uuid}`);
+    await client.disconnect();
     return decoded;
-  } else return null;
+  } else {
+    await client.disconnect();
+    return null; 
+  }
 }
