@@ -70,9 +70,14 @@ export async function revealSecret(payload: RevealPayload) {
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
     await client.del(`tempest:${payload.uuid}`);
-    return furnace.decode(
-      toUint8Array(json.token),
-      TIME_CONVERSION[json.period] * json.amount
-    );
+    try {
+      var decoded = furnace.decode(
+        toUint8Array(json.token),
+        TIME_CONVERSION[json.period] * json.amount
+      );
+    } catch (error) {
+      return null;
+    }
+    return decoded;
   } else return null;
 }
