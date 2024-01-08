@@ -8,7 +8,6 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import { Source_Code_Pro } from "next/font/google";
 import strings from "@/config/strings.json";
 import Image from "next/image";
-import { getTheme } from "../page";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
