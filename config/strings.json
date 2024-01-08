@@ -1,9 +1,16 @@
 {
   "generic": {
-    "logo": "",
+    "logo": {
+      "href": {
+        "light": "",
+        "dark": ""
+      },
+      "size": 128
+    },
     "generate": "Generate Link",
     "copy": "Copy to Clipboard",
-    "reveal": "Reveal Secret"
+    "reveal": "Reveal Secret",
+    "contact": ""
   },
   "generate": {
     "head": "Share a secret!",

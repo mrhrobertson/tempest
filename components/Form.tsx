@@ -6,7 +6,9 @@ import { Source_Code_Pro } from "next/font/google";
 import { submit } from "@/app/actions";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import strings from "@/config/strings.json";
+import config from "@/config/config.json";
 import Image from "next/image";
+import { getTheme } from "@/app/page";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -19,12 +21,22 @@ export default function Form() {
   );
   var [link, setLink] = useState<string>("");
   var [loading, setLoading] = useState<boolean>(false);
+  var [theme, setTheme] = useState<string>();
 
   useEffect(() => {
     setDate(
       moment().add(amount, period as moment.unitOfTime.DurationConstructor)
     );
   }, [amount, period]);
+
+  useEffect(() => {
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => e.matches && setTheme("dark"));
+    window
+      .matchMedia("(prefers-color-scheme: light)")
+      .addEventListener("change", (e) => e.matches && setTheme("light"));
+  });
 
   const resetValues = () => {
     setContent("");
@@ -49,6 +61,23 @@ export default function Form() {
       <div
         className={`flex flex-col items-center justify-center w-full sm:w-3/4 lg:w-1/2 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark`}
       >
+        {strings.generic.logo &&
+        strings.generic.logo.href.dark !== "" &&
+        strings.generic.logo.href.light !== "" ? (
+          <Image
+            src={
+              theme === "dark"
+                ? strings.generic.logo.href.dark
+                : strings.generic.logo.href.light
+            }
+            alt="Logo"
+            width={strings.generic.logo.size}
+            height={strings.generic.logo.size}
+            className="mb-2"
+          />
+        ) : (
+          ""
+        )}
         <h1>{strings.generated.head}!</h1>
         <div className="flex flex-col w-full gap-4">
           <div className="flex flex-col md:flex-row gap-4 md:gap-0 w-full">
@@ -72,7 +101,7 @@ export default function Form() {
           type="submit"
           disabled={loading}
           onClick={() => resetValues()}
-          className={`flex-grow px-4 py-4 md:py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark rounded-lg`}
+          className={`flex-grow px-4 py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark rounded-lg`}
         >
           <span>{strings.generic.generate}</span>
         </button>
@@ -82,18 +111,26 @@ export default function Form() {
     <main
       className={`flex min-h-screen w-full p-8 flex-col items-center justify-center text-light dark:text-dark bg-main-light dark:bg-main-dark`}
     >
-      <div className="flex flex-col items-center sm:3/4 lg:w-1/2 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark">
-        {strings.generic.logo && strings.generic.logo !== "" ? (
+      <div
+        className={`flex flex-col items-center sm:3/4 lg:w-1/2 p-8 rounded-2xl gap-4 bg-container-light dark:bg-container-dark`}
+      >
+        {strings.generic.logo &&
+        strings.generic.logo.href.dark !== "" &&
+        strings.generic.logo.href.light !== "" ? (
           <Image
-            src={strings.generic.logo}
-            alt="Bizi Logo"
-            width={96}
-            height={96}
+            src={
+              theme === "dark"
+                ? strings.generic.logo.href.dark
+                : strings.generic.logo.href.light
+            }
+            alt="Logo"
+            width={strings.generic.logo.size}
+            height={strings.generic.logo.size}
+            className="mb-2"
           />
         ) : (
           ""
         )}
-
         <h1>{strings.generate.head}</h1>
         <form
           onSubmit={handleSubmit}
@@ -126,14 +163,22 @@ export default function Form() {
                 id="amount"
                 type="number"
                 onChange={(e: any) => setAmount(parseInt(e.target.value))}
-                min={1}
+                min={
+                  period == "h"
+                    ? config.hours.min
+                    : period == "d"
+                    ? config.days.min
+                    : period == "w"
+                    ? config.weeks.min
+                    : 1
+                }
                 max={
                   period == "h"
-                    ? 24
+                    ? config.hours.max
                     : period == "d"
-                    ? 30
+                    ? config.days.max
                     : period == "w"
-                    ? 12
+                    ? config.weeks.max
                     : 1
                 }
                 value={amount}
@@ -144,17 +189,36 @@ export default function Form() {
                 onChange={(e: any) => setPeriod(e.target.value)}
                 value={period}
               >
-                <option value="h">hour{amount > 1 ? "s" : ""}</option>
-                <option value="d">day{amount > 1 ? "s" : ""}</option>
-                <option value="w">week{amount > 1 ? "s" : ""}</option>
+                {config.hours.enabled ? (
+                  <option value="h">hour{amount > 1 ? "s" : ""}</option>
+                ) : (
+                  ""
+                )}
+                {config.days.enabled ? (
+                  <option value="d">day{amount > 1 ? "s" : ""}</option>
+                ) : (
+                  ""
+                )}
+                {config.weeks.enabled ? (
+                  <option value="w">week{amount > 1 ? "s" : ""}</option>
+                ) : (
+                  ""
+                )}
               </select>
             </div>
           </div>
         </form>
-        <p className="text-center">
+        <p className="text-center mt-4">
           This link will expiry on the {date.format("LLLL")}. You can change
           this using the TTL (time-to-live).
         </p>
+        {strings.generic.contact ? (
+          <p className="text-center text-dark bg-primary-light dark:bg-primary-dark p-4 text-sm mt-2 rounded-lg w-full">
+            {strings.generic.contact}
+          </p>
+        ) : (
+          ""
+        )}
       </div>
     </main>
   );

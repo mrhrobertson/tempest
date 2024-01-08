@@ -7,6 +7,8 @@ import { revealSecret } from "@/app/actions";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import { Source_Code_Pro } from "next/font/google";
 import strings from "@/config/strings.json";
+import Image from "next/image";
+import { getTheme } from "../page";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -35,6 +37,23 @@ export default function Page() {
       <div
         className={`flex flex-col items-center justify-center w-full md:w-1/2 lg:w-2/5 lg:max-w-4/5 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark`}
       >
+        {strings.generic.logo &&
+        strings.generic.logo.href.dark !== "" &&
+        strings.generic.logo.href.light !== "" ? (
+          /*<Image
+            src={
+              theme === "dark"
+                ? strings.generic.logo.href.dark
+                : strings.generic.logo.href.light
+            }
+            alt="Logo"
+            width={strings.generic.logo.size}
+            height={strings.generic.logo.size}
+            className="mb-2"
+          />*/
+        ) : (
+          ""
+        )}
         {reveal && message ? (
           <div className="flex flex-col w-full gap-4 items-center">
             <h1>{strings.revealed.head}</h1>
@@ -54,7 +73,7 @@ export default function Page() {
               </button>
             </div>
             <Link
-              className={`flex-grow px-4 py-4 md:py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark text-center rounded-lg`}
+              className={`flex-grow px-4 py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark text-center rounded-lg`}
               href="/"
             >
               {strings.generic.generate}
@@ -67,7 +86,7 @@ export default function Page() {
               {strings.invalid.warning}
             </p>
             <Link
-              className={`px-4 py-4 md:py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark rounded-lg text-center`}
+              className={`px-4 py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark rounded-lg text-center`}
               href="/"
             >
               {strings.generic.generate}
@@ -81,7 +100,7 @@ export default function Page() {
             </p>
             <button
               onClick={handleReveal}
-              className={`px-4 py-4 md:py-2 w-full bg-secondary-light dark:bg-secondary-dark text-secondary-text-light dark:text-secondary-text-dark hover:bg-secondary-hover-light dark:hover:bg-secondary-hover-dark hover:text-secondary-text-dark dark:hover:text-secondary-text-dark active:bg-secondary-active-light dark:active:bg-secondary-active-dark active:text-secondary-active-text-light dark:active:text-secondary-active-text-dark rounded-lg`}
+              className={`px-4 py-2 w-full bg-secondary-light dark:bg-secondary-dark text-secondary-text-light dark:text-secondary-text-dark hover:bg-secondary-hover-light dark:hover:bg-secondary-hover-dark hover:text-secondary-text-dark dark:hover:text-secondary-text-dark active:bg-secondary-active-light dark:active:bg-secondary-active-dark active:text-secondary-active-text-light dark:active:text-secondary-active-text-dark rounded-lg`}
             >
               <span>{strings.generic.reveal}</span>
             </button>
