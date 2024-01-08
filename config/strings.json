@@ -1,5 +1,6 @@
 {
   "generic": {
+    "logo": "",
     "generate": "Generate Link",
     "copy": "Copy to Clipboard",
     "reveal": "Reveal Secret"

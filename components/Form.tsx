@@ -6,6 +6,7 @@ import { Source_Code_Pro } from "next/font/google";
 import { submit } from "@/app/actions";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import strings from "@/config/strings.json";
+import Image from "next/image";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -82,6 +83,17 @@ export default function Form() {
       className={`flex min-h-screen w-full p-8 flex-col items-center justify-center text-light dark:text-dark bg-main-light dark:bg-main-dark`}
     >
       <div className="flex flex-col items-center sm:3/4 lg:w-1/2 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark">
+        {strings.generic.logo && strings.generic.logo !== "" ? (
+          <Image
+            src={strings.generic.logo}
+            alt="Bizi Logo"
+            width={96}
+            height={96}
+          />
+        ) : (
+          ""
+        )}
+
         <h1>{strings.generate.head}</h1>
         <form
           onSubmit={handleSubmit}
