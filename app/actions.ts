@@ -61,11 +61,15 @@ export async function revealSecret(payload: RevealPayload) {
   const furnace = new Furnace(key);
   const client = createClient(REDIS_CFG as RedisClientOptions);
   await client.connect();
-  const res = await client.get(`tempest:${payload.uuid}`);
-  await client.del(`tempest:${payload.uuid}`);
+  try {
+    var res = await client.get(`tempest:${payload.uuid}`);
+  } catch (e) {
+    return null;
+  }
   await client.disconnect();
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
+    await client.del(`tempest:${payload.uuid}`);
     return furnace.decode(
       toUint8Array(json.token),
       TIME_CONVERSION[json.period] * json.amount
