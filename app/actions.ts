@@ -29,7 +29,7 @@ const TIME_CONVERSION: { [id: string]: number } = {
 
 const REDIS_CFG = {
   url: process.env.REDIS_URL
-    ? process.env.REDIS_URL
+    ? `redis://${process.env.REDIS_URL}:6379`
     : process.env.KV_URL
     ? process.env.KV_URL
     : "redis://localhost:6379",
@@ -82,6 +82,6 @@ export async function revealSecret(payload: RevealPayload) {
     return decoded;
   } else {
     await client.disconnect();
-    return null; 
+    return null;
   }
 }

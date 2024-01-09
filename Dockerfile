@@ -1,10 +1,12 @@
 FROM node:lts-alpine
 
-WORKDIR /usr/app
+WORKDIR /app
 
 COPY ./package*.json ./
 
 COPY ./ ./
+
+RUN npm install
 
 RUN npm run build
 
