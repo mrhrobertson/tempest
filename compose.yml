@@ -5,15 +5,15 @@ services:
     image: tempest:latest
     container_name: core
     ports:
-      - "3000:3000"
+      - "3000:80"
     volumes:
-      - ./cfg/core/:./config:ro
+      - ./cfg/core/config.json:./config/config.json:ro
+      - ./cfg/core/strings.json:./config/config.json:ro
+      - ./cfg/core/tailwind.config.ts:./tailwind.config.ts:ro
+      - ./cfg/core/public:./public:ro
     environment:
-      - NO_TLS=true
+      - TLS=false
     restart: always
-    depends_on:
-      - db
-      - proxy
   db:
     image: redis:latest
     container_name: db
