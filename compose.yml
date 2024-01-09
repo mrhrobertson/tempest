@@ -5,12 +5,12 @@ services:
     image: tempest:latest
     container_name: core
     ports:
-      - "3000:80"
+      - "80:3000"
     volumes:
-      - ./cfg/core/config.json:./config/config.json:ro
-      - ./cfg/core/strings.json:./config/config.json:ro
-      - ./cfg/core/tailwind.config.ts:./tailwind.config.ts:ro
-      - ./cfg/core/public:./public:ro
+      - ./cfg/core/config.json:/app/config/config.json:ro
+      - ./cfg/core/strings.json:/app/config/strings.json:ro
+      - ./cfg/core/tailwind.config.ts:/app/tailwind.config.ts:ro
+      - ./cfg/core/public:/app/public:ro
     environment:
       - TLS=false
     restart: always
