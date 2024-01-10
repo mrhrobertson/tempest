@@ -8,11 +8,9 @@ COPY ./ ./
 
 RUN npm install
 
-RUN npm run build
-
 EXPOSE 3000
 
 USER node
 
-CMD npm run start
+CMD npm run build && npm run start
 
