@@ -7,15 +7,15 @@ services:
     ports:
       - "80:3000"
     volumes:
-      - /cfg/core/config:/app/config:ro
-      - /cfg/core/public:/app/public:ro
+      - /cfg/core/config:/app/config:ro # responsible for the localisation, limits and theming of the app.
+      - /cfg/core/public:/app/public:ro # any images or static assets that need served, such as the custom logo
     environment:
-      - REDIS_URL=db
-      - TLS=false
+      - REDIS_URL=db # use name of redis container that you wish to use for storage
+      - TLS=false # if not using docker, use TLS to speak to redis, such as Vercel KV (KV_URL to be supplied instead of REDIS_URL)
     restart: always
   db:
     image: redis:latest
     container_name: db
     environment:
-      - REDIS_DISABLE_COMMANDS=KEYS,FLUSHDB,FLUSHALL
+      - REDIS_DISABLE_COMMANDS=KEYS,FLUSHDB,FLUSHALL # stops recon/mass-destructive commands being used on REDIS
     restart: always

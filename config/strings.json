@@ -10,6 +10,8 @@
     "generate": "Generate Link",
     "copy": "Copy to Clipboard",
     "reveal": "Reveal Secret",
+    "title": "Tempest",
+    "desc": "Simply send passwords safely.",
     "contact": ""
   },
   "generate": {
