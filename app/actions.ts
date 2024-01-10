@@ -8,6 +8,7 @@ type SubmitPayload = {
   content: string;
   amount: number;
   period: string;
+  clicks: number;
 };
 
 type RevealPayload = {
@@ -19,6 +20,7 @@ type DecodeResponse = {
   token: string;
   amount: number;
   period: string;
+  clicks: number;
 };
 
 const TIME_CONVERSION: { [id: string]: number } = {
@@ -50,6 +52,7 @@ export async function submit(payload: SubmitPayload) {
       token: toBase64URL(token),
       amount: payload.amount,
       period: payload.period,
+      clicks: payload.clicks,
     })
   );
   await client.disconnect();
@@ -77,7 +80,17 @@ export async function revealSecret(payload: RevealPayload) {
       await client.disconnect();
       return null;
     }
-    await client.del(`tempest:${payload.uuid}`);
+    json.clicks == 1
+      ? await client.del(`tempest:${payload.uuid}`)
+      : await client.set(
+          `tempest:${payload.uuid}`,
+          JSON.stringify({
+            token: json.token,
+            amount: json.amount,
+            period: json.period,
+            clicks: json.clicks - 1,
+          })
+        );
     await client.disconnect();
     return decoded;
   } else {

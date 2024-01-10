@@ -7,11 +7,8 @@ services:
     ports:
       - "80:3000"
     volumes:
-      - ./cfg/core/config:/app/config:rw
-      - ./cfg/core/public:/app/public:rw
-      - type: bind
-        source: "${PWD}/cfg/core/tailwind.config.ts"
-        target: /app/tailwind.config.ts
+      - /cfg/core/config:/app/config:ro
+      - /cfg/core/public:/app/public:ro
     environment:
       - REDIS_URL=db
       - TLS=false

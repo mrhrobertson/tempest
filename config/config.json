@@ -1,4 +1,9 @@
 {
+  "default": {
+    "amount": 2,
+    "period": "d",
+    "clicks": 3
+  },
   "hours": {
     "enabled": true,
     "min": 1,
@@ -13,5 +18,10 @@
     "enabled": true,
     "min": 1,
     "max": 4
+  },
+  "clicks": {
+    "enabled": true,
+    "min": 1,
+    "max": 5
   }
 }
