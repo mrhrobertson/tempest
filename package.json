@@ -1,6 +1,6 @@
 {
   "name": "tempest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,7 +15,8 @@
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "redis": "^4.6.12"
+    "redis": "^4.6.12",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@types/node": "^20",
