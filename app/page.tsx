@@ -30,13 +30,17 @@ export default function Home() {
   }, [amount, period]);
 
   useEffect(() => {
+    let initTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+    setTheme(initTheme);
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", (e) => e.matches && setTheme("dark"));
     window
       .matchMedia("(prefers-color-scheme: light)")
       .addEventListener("change", (e) => e.matches && setTheme("light"));
-  });
+  }, [theme]);
 
   const resetValues = () => {
     setContent("");
@@ -221,13 +225,30 @@ export default function Home() {
             </div>
           </form>
           <p className="text-center mt-4">
-            This link will expiry on the {date.format("LLLL")}. You can change
+            This link will expire on the {date.format("LLLL")}. You can change
             this using the TTL (time-to-live). The link will be able to be
             revealed {clicks} time{clicks > 1 ? "s" : ""}.
           </p>
           {strings.generic.contact ? (
-            <p className="text-center text-dark bg-primary-light dark:bg-primary-dark p-4 text-sm mt-2 rounded-lg w-full">
-              {strings.generic.contact}
+            <p className="text-center text-dark bg-info p-4 text-sm mt-2 rounded-lg w-full">
+              {strings.generic.phone ? (
+                strings.generic.contact.search("<phone>") ? (
+                  <span>
+                    {strings.generic.contact.split("<phone>")[0]}
+                    <a
+                      className="font-bold underline underline-offset-4"
+                      href={`tel:${strings.generic.phone}`}
+                    >
+                      {strings.generic.phone}
+                    </a>
+                    {strings.generic.contact.split("<phone>")[1]}
+                  </span>
+                ) : (
+                  strings.generic.contact
+                )
+              ) : (
+                strings.generic.contact
+              )}
             </p>
           ) : (
             ""

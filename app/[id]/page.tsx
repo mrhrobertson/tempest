@@ -22,6 +22,10 @@ export default function Page() {
   const [theme, setTheme] = useState<string>();
 
   useEffect(() => {
+    let initTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+    setTheme(initTheme);
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", (e) => e.matches && setTheme("dark"));

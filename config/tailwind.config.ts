@@ -74,6 +74,7 @@ const config: Config = {
             },
           },
         },
+        info: colors.red[500],
         warning: colors.red[500],
         light: colors.zinc[900],
         dark: colors.zinc[50],
