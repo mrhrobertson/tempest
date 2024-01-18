@@ -74,7 +74,13 @@ const config: Config = {
             },
           },
         },
-        info: colors.red[500],
+        info: {
+          primary: colors.red[500],
+          button: {
+            primary: colors.red[600],
+            hover: colors.red[400],
+          },
+        },
         warning: colors.red[500],
         light: colors.zinc[900],
         dark: colors.zinc[50],

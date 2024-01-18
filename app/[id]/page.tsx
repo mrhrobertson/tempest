@@ -38,6 +38,12 @@ export default function Page() {
     e.preventDefault();
     setReveal(false);
     const payload = { uuid, key };
+    console.log(payload);
+    if (payload.key || payload.key == undefined) {
+      setMessage(null!);
+      setReveal(true);
+      return;
+    }
     const res: string | null = await revealSecret(payload);
     setMessage(res!);
     setReveal(true);

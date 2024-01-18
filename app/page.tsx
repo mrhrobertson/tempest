@@ -4,7 +4,7 @@ import moment, { Moment } from "moment";
 import { useEffect, useState } from "react";
 import { Source_Code_Pro } from "next/font/google";
 import { submit } from "@/app/actions";
-import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
+import { DocumentDuplicateIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import strings from "@/config/strings.json";
 import config from "@/config/config.json";
 import Image from "next/image";
@@ -25,6 +25,8 @@ export default function Home() {
   var [link, setLink] = useState<string>("");
   var [loading, setLoading] = useState<boolean>(false);
   var [theme, setTheme] = useState<string>();
+
+  var phone = strings.generic.phone.replaceAll(" ", "");
 
   useEffect(() => {
     setDate(
@@ -233,15 +235,16 @@ export default function Home() {
             revealed {clicks} time{clicks > 1 ? "s" : ""}.
           </p>
           {strings.generic.contact ? (
-            <p className="text-center text-dark bg-info p-4 text-sm mt-2 rounded-lg w-full">
+            <p className="flex items-center justify-center text-center text-dark bg-info-primary p-4 text-sm mt-2 rounded-lg w-full">
               {strings.generic.phone ? (
                 strings.generic.contact.search("<phone>") ? (
-                  <span>
+                  <span className="w-full flex flex-row items-center justify-center gap-2">
                     {strings.generic.contact.split("<phone>")[0]}
                     <a
-                      className="font-bold underline underline-offset-4"
-                      href={`tel:${strings.generic.phone}`}
+                      className="flex items-center justify-center gap-2 font-bold bg-info-button-primary hover:bg-info-button-hover py-2 px-4 rounded-md shadow-sm"
+                      href={`tel:${phone}`}
                     >
+                      <PhoneIcon className="w-4 h-4" />
                       {strings.generic.phone}
                     </a>
                     {strings.generic.contact.split("<phone>")[1]}
