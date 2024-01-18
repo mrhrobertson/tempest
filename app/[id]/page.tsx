@@ -32,7 +32,7 @@ export default function Page() {
     window
       .matchMedia("(prefers-color-scheme: light)")
       .addEventListener("change", (e) => e.matches && setTheme("light"));
-  });
+  }, [theme]);
 
   const handleReveal = async (e: any) => {
     e.preventDefault();

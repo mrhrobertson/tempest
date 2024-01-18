@@ -43,7 +43,7 @@ export default function Home() {
     window
       .matchMedia("(prefers-color-scheme: light)")
       .addEventListener("change", (e) => e.matches && setTheme("light"));
-  }, []);
+  }, [theme]);
 
   const resetValues = () => {
     setContent("");
