@@ -17,7 +17,10 @@ export default function Home() {
   var [period, setPeriod] = useState<string>(config.default.period);
   var [clicks, setClicks] = useState<number>(config.default.clicks);
   var [date, setDate] = useState<Moment>(
-    moment().add(amount, period as moment.unitOfTime.DurationConstructor)
+    moment().add(
+      config.default.amount,
+      config.default.period as moment.unitOfTime.DurationConstructor
+    )
   );
   var [link, setLink] = useState<string>("");
   var [loading, setLoading] = useState<boolean>(false);
@@ -102,7 +105,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <p>This link will expiry on the {date.format("LLLL")}</p>
+          <p>This link will expire on the {date.format("LLLL")}</p>
           <button
             type="submit"
             disabled={loading}
