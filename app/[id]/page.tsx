@@ -39,7 +39,7 @@ export default function Page() {
     setReveal(false);
     const payload = { uuid, key };
     console.log(payload);
-    if (payload.key || payload.key == undefined) {
+    if (!payload.key || payload.key == undefined) {
       setMessage(null!);
       setReveal(true);
       return;
