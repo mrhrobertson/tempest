@@ -55,6 +55,9 @@ export async function submit(payload: SubmitPayload) {
       clicks: payload.clicks,
     })
   );
+  console.log(
+    `Created ${uuid} | TTL: ${payload.amount}${payload.period} | Clicks: ${payload.clicks}`
+  );
   await client.disconnect();
   return `${uuid}~${keyB64}`;
 }
@@ -72,6 +75,9 @@ export async function revealSecret(payload: RevealPayload) {
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
     try {
+      console.log(
+        `Decoded ${payload.uuid} | TTL: ${json.amount}${json.period} | Clicks: ${json.clicks}`
+      );
       var decoded = furnace.decode(
         toUint8Array(json.token),
         TIME_CONVERSION[json.period] * json.amount
@@ -80,17 +86,25 @@ export async function revealSecret(payload: RevealPayload) {
       await client.disconnect();
       return null;
     }
-    json.clicks == 1
-      ? await client.del(`tempest:${payload.uuid}`)
-      : await client.set(
-          `tempest:${payload.uuid}`,
-          JSON.stringify({
-            token: json.token,
-            amount: json.amount,
-            period: json.period,
-            clicks: json.clicks - 1,
-          })
-        );
+    if (json.clicks - 1 == 0) {
+      console.log(`Deleting ${payload.uuid}, no more clicks allowed.`);
+      await client.del(`tempest:${payload.uuid}`);
+    } else {
+      await client.set(
+        `tempest:${payload.uuid}`,
+        JSON.stringify({
+          token: json.token,
+          amount: json.amount,
+          period: json.period,
+          clicks: json.clicks - 1,
+        })
+      );
+      console.log(
+        `Updated ${payload.uuid} | TTL: ${json.amount}${
+          json.period
+        } | Clicks: ${json.clicks - 1}`
+      );
+    }
     await client.disconnect();
     return decoded;
   } else {
