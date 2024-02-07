@@ -80,10 +80,10 @@ export async function revealSecret(payload: RevealPayload) {
   }
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
+    console.log(
+      `Decoded ${payload.uuid} | TTL: ${json.amount}${json.period} | Clicks: ${json.clicks}`
+    );
     try {
-      console.log(
-        `Decoded ${payload.uuid} | TTL: ${json.amount}${json.period} | Clicks: ${json.clicks}`
-      );
       var decoded = furnace.decode(
         toUint8Array(json.token),
         TIME_CONVERSION[json.period] * json.amount
