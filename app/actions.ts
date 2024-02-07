@@ -2,6 +2,7 @@
 
 import { Furnace, toBase64URL, toUint8Array } from "@mrhrobertson/furnace";
 import { randomBytes, randomUUID } from "crypto";
+import moment from "moment";
 import { RedisClientOptions, createClient } from "redis";
 
 type SubmitPayload = {
@@ -41,7 +42,13 @@ const REDIS_CFG = {
 export async function submit(payload: SubmitPayload) {
   const key = new Uint8Array(randomBytes(32));
   const furnace = new Furnace(key);
-  const token = furnace.encode(payload.content);
+  var token: Uint8Array;
+  try {
+    token = furnace.encode(payload.content) as Uint8Array;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
   const client = createClient(REDIS_CFG as RedisClientOptions);
   const uuid = randomUUID();
   const keyB64 = toBase64URL(key);
@@ -57,11 +64,15 @@ export async function submit(payload: SubmitPayload) {
       })
     );
   } catch (error) {
-    console.log(`${uuid}: ${error}`);
+    console.error(`[${moment().toLocaleString()}] ${uuid}: ${error}`);
     return null;
   }
-  console.log(
-    `Created ${uuid} | TTL: ${payload.amount}${payload.period} | Clicks: ${payload.clicks}`
+  console.info(
+    `[${moment().toLocaleString()}] TEMPEST: Created ${uuid} | TTL: ${
+      payload.amount
+    }${payload.period}/${
+      payload.amount * TIME_CONVERSION[payload.period]
+    } | Clicks: ${payload.clicks}`
   );
   await client.disconnect();
   return `${uuid}~${keyB64}`;
@@ -75,13 +86,19 @@ export async function revealSecret(payload: RevealPayload) {
   try {
     var res = await client.get(`tempest:${payload.uuid}`);
   } catch (error) {
-    console.log(`${payload.uuid}: ${error}`);
+    console.error(
+      `[${moment().toLocaleString()}] TEMPEST: Unable to find ${payload.uuid}.`
+    );
     return null;
   }
   if (res) {
     const json: DecodeResponse = JSON.parse(res);
-    console.log(
-      `Decoded ${payload.uuid} | TTL: ${json.amount}${json.period} | Clicks: ${json.clicks}`
+    console.info(
+      `[${moment().toLocaleString()}] TEMPEST: Decoded ${payload.uuid} | TTL: ${
+        json.amount
+      }${json.period}/${json.amount * TIME_CONVERSION[json.period]} | Clicks: ${
+        json.clicks
+      }`
     );
     try {
       var decoded = furnace.decode(
@@ -90,11 +107,19 @@ export async function revealSecret(payload: RevealPayload) {
       );
     } catch (error) {
       await client.disconnect();
-      console.log(`${payload.uuid}: ${error}`);
+      console.error(
+        `[${moment().toLocaleString()}] TEMPEST: Failed to decode ${
+          payload.uuid
+        }.`
+      );
       return null;
     }
     if (json.clicks - 1 == 0) {
-      console.log(`Deleting ${payload.uuid}, no more clicks allowed.`);
+      console.log(
+        `[${moment().toLocaleString()}] TEMPEST: Deleting ${
+          payload.uuid
+        }, no more clicks allowed.`
+      );
       await client.del(`tempest:${payload.uuid}`);
     } else {
       await client.set(
@@ -107,8 +132,10 @@ export async function revealSecret(payload: RevealPayload) {
         })
       );
       console.log(
-        `Updated ${payload.uuid} | TTL: ${json.amount}${
-          json.period
+        `[${moment().toLocaleString()}] TEMPEST: Updated ${
+          payload.uuid
+        } | TTL: ${json.amount}${json.period}/${
+          json.amount * TIME_CONVERSION[json.period]
         } | Clicks: ${json.clicks - 1}`
       );
     }
@@ -116,6 +143,11 @@ export async function revealSecret(payload: RevealPayload) {
     return decoded;
   } else {
     await client.disconnect();
+    console.error(
+      `[${moment().toLocaleString()}] TEMPEST: Couldn't find ${
+        payload.uuid
+      } in database, likely expired or never existed.`
+    );
     return null;
   }
 }
