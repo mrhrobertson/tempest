@@ -46,15 +46,20 @@ export async function submit(payload: SubmitPayload) {
   const uuid = randomUUID();
   const keyB64 = toBase64URL(key);
   await client.connect();
-  await client.set(
-    `tempest:${uuid}`,
-    JSON.stringify({
-      token: toBase64URL(token),
-      amount: payload.amount,
-      period: payload.period,
-      clicks: payload.clicks,
-    })
-  );
+  try {
+    await client.set(
+      `tempest:${uuid}`,
+      JSON.stringify({
+        token: toBase64URL(token),
+        amount: payload.amount,
+        period: payload.period,
+        clicks: payload.clicks,
+      })
+    );
+  } catch (error) {
+    console.log(`${uuid}: ${error}`);
+    return null;
+  }
   console.log(
     `Created ${uuid} | TTL: ${payload.amount}${payload.period} | Clicks: ${payload.clicks}`
   );
@@ -69,7 +74,8 @@ export async function revealSecret(payload: RevealPayload) {
   await client.connect();
   try {
     var res = await client.get(`tempest:${payload.uuid}`);
-  } catch (e) {
+  } catch (error) {
+    console.log(`${payload.uuid}: ${error}`);
     return null;
   }
   if (res) {
@@ -84,6 +90,7 @@ export async function revealSecret(payload: RevealPayload) {
       );
     } catch (error) {
       await client.disconnect();
+      console.log(`${payload.uuid}: ${error}`);
       return null;
     }
     if (json.clicks - 1 == 0) {
