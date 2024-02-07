@@ -59,7 +59,7 @@ export default function Home() {
     e.preventDefault();
     setLoading(true);
     const payload = { content, amount, period, clicks };
-    const res: string = await submit(payload);
+    const res: string | null = await submit(payload);
     setLink(`${window.location.origin}/${res}`);
     setLoading(false);
   };
