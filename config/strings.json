@@ -7,16 +7,19 @@
       },
       "size": 128
     },
-    "generate": "Generate Link",
+    "generate": "Generate Secure Link",
     "copy": "Copy to Clipboard",
     "reveal": "Reveal Secret",
     "title": "Tempest",
     "desc": "Simply send passwords safely.",
     "contact": "Use the variable <phone> to add it to the message.",
-    "phone": "0123 456 7890"
+    "phone": "0123 456 7890",
+    "ttl": "Share this secret for:",
+    "clicks": "Number of times this secret can be viewed:",
+    "icon": "./icon.png"
   },
   "generate": {
-    "head": "Share a secret!",
+    "head": "Please enter the information you'd like to share below. Once you've generated the link, send this to whoever you wish to share with.",
     "place": "Type in here...",
     "clicked": "Generating..."
   },
