@@ -27,15 +27,15 @@ const config: Config = {
           dark: colors.zinc[900],
         },
         primary: {
-          light: colors.green[500],
-          dark: colors.green[600],
+          light: colors.blue[400],
+          dark: colors.blue[500],
           text: {
             light: colors.zinc[50],
             dark: colors.zinc[50],
           },
           hover: {
-            light: colors.green[400],
-            dark: colors.green[500],
+            light: colors.blue[500],
+            dark: colors.blue[400],
             text: {
               light: colors.zinc[50],
               dark: colors.zinc[50],
@@ -43,7 +43,7 @@ const config: Config = {
           },
           active: {
             light: colors.blue[600],
-            dark: colors.green[700],
+            dark: colors.blue[700],
             text: {
               light: colors.zinc[50],
               dark: colors.zinc[50],

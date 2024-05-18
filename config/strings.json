@@ -2,8 +2,8 @@
   "generic": {
     "logo": {
       "href": {
-        "light": "",
-        "dark": ""
+        "light": "/logo.svg",
+        "dark": "/logo.svg"
       },
       "size": 128
     },
@@ -15,8 +15,7 @@
     "contact": "Use the variable <phone> to add it to the message.",
     "phone": "0123 456 7890",
     "ttl": "Share this secret for:",
-    "clicks": "Number of times this secret can be viewed:",
-    "icon": "./icon.png"
+    "clicks": "Number of times this secret can be viewed:"
   },
   "generate": {
     "head": "Please enter the information you'd like to share below. Once you've generated the link, send this to whoever you wish to share with.",

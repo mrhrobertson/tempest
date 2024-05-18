@@ -5,7 +5,7 @@ services:
     image: tempest:latest
     container_name: core
     ports:
-      - "80:3000"
+      - 80:3000
     volumes:
       - /cfg/core/config:/app/config:ro # responsible for the localisation, limits and theming of the app.
       - /cfg/core/public:/app/public:ro # any images or static assets that need served, such as the custom logo
