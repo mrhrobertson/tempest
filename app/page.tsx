@@ -10,6 +10,7 @@ import config from "@/config/config.json";
 import Image from "next/image";
 import MonospacedDisplay from "@/components/style/MonospacedDisplay";
 import GeneratedLink from "@/components/GeneratedLink";
+import Branding from "@/components/Branding";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -69,7 +70,7 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen w-full p-8 flex-col items-center justify-center text-light dark:text-dark bg-main-light dark:bg-main-dark`}
+      className={`flex min-h-screen w-full p-8 flex-col items-center justify-center gap-4 text-light dark:text-dark bg-main-light dark:bg-main-dark`}
     >
       {link ? (
         <GeneratedLink link={link} theme={theme} date={date} />
@@ -233,6 +234,7 @@ export default function Home() {
           )}
         </div>
       )}
+      <Branding />
     </main>
   );
 }

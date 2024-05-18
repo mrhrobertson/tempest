@@ -29,6 +29,6 @@
     "link": false
   },
   "input": {
-    "multiline": false
+    "multiline": true
   }
 }
