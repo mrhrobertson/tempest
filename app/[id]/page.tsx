@@ -10,6 +10,7 @@ import strings from "@/config/strings.json";
 import config from "@/config/config.json";
 import Image from "next/image";
 import MonospacedDisplay from "@/components/style/MonospacedDisplay";
+import Branding from "@/components/Branding";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -54,10 +55,10 @@ export default function Page() {
 
   return (
     <main
-      className={`flex min-h-screen w-full flex-col items-center justify-center p-8 text-light dark:text-dark bg-main-light dark:bg-main-dark`}
+      className={`flex min-h-screen w-full flex-col items-center justify-center p-8 gap-4 text-light dark:text-dark bg-main-light dark:bg-main-dark`}
     >
       <div
-        className={`flex flex-col items-center justify-center w-full md:w-1/2 lg:w-2/5 lg:max-w-4/5 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark`}
+        className={`flex flex-col items-center justify-center w-full lg:w-2/5 lg:max-w-4/5 p-4 rounded-2xl gap-4 bg-container-light dark:bg-container-dark`}
       >
         {strings.generic.logo &&
         strings.generic.logo.href.dark !== "" &&
@@ -128,6 +129,7 @@ export default function Page() {
           </div>
         )}
       </div>
+      <Branding />
     </main>
   );
 }

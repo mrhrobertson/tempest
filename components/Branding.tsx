@@ -1,8 +1,9 @@
 import { HeartIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import config from "@/config/config.json";
 
 export default function Branding() {
-  return (
+  return config.default.branding ? (
     <div className="flex items-center gap-1 px-4 py-3 text-xs sm:text-sm justify-center w-full lg:w-auto xl:absolute xl:right-6 xl:bottom-4 rounded-lg bg-container-light dark:bg-container-dark">
       <Link
         href={"https://github.com/mrhrobertson/tempest"}
@@ -15,5 +16,7 @@ export default function Branding() {
         - made with <HeartIcon className="h-4" /> by mrhrobertson
       </p>
     </div>
+  ) : (
+    <></>
   );
 }
