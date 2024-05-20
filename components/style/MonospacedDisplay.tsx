@@ -7,7 +7,7 @@ export default function MonospacedDisplay(props: PropsWithChildren) {
   return (
     <span
       style={scp.style}
-      className={`text-xs p-4 text-dark bg-display-light dark:bg-display-dark rounded-lg w-full select-all break-words`}
+      className={`text-xs p-4 text-dark bg-display-light dark:bg-display-dark rounded-lg w-full select-all break-words whitespace-pre-line`}
     >
       {props.children}
     </span>
