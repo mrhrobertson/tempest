@@ -11,6 +11,7 @@ import config from "@/config/config.json";
 import Image from "next/image";
 import MonospacedDisplay from "@/components/style/MonospacedDisplay";
 import Branding from "@/components/Branding";
+import GenerateLink from "@/components/GenerateLink";
 
 const scp = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -23,7 +24,6 @@ export default function Page() {
   const [key, setKey] = useState<string>(usePathname().split("~")[1]);
   const [message, setMessage] = useState<string>("");
   const [theme, setTheme] = useState<string>();
-  const [link, setLink] = useState<boolean>(config.reveal.link);
 
   useEffect(() => {
     let initTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -90,29 +90,21 @@ export default function Page() {
                 <span className="block">{strings.generic.copy}</span>
               </button>
             </div>
-            {link ? (
-              <Link
-                className={`flex-grow px-4 py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark text-center rounded-lg`}
-                href="/"
-              >
-                {strings.generic.generate}
-              </Link>
-            ) : (
-              <></>
-            )}
+            <GenerateLink />
           </div>
         ) : reveal && !message ? (
           <div className="flex flex-col w-full gap-4 items-center">
-            <h1>{strings.invalid.head}</h1>
-            <p className="w-full p-4 rounded-lg text-center bg-warning text-dark text-sm">
-              {strings.invalid.warning}
-            </p>
-            <Link
-              className={`px-4 py-2 w-full bg-primary-light dark:bg-primary-dark text-primary-text-light dark:text-primary-text-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark hover:text-primary-hover-text-light dark:hover:text-primary-hover-text-dark active:bg-primary-active-light dark:active:bg-primary-active-dark active:text-primary-active-text-light dark:active:text-primary-active-text-dark rounded-lg text-center`}
-              href="/"
-            >
-              {strings.generic.generate}
-            </Link>
+            <h1 className={`${config.reveal.link ? "" : "pb-2"}`}>
+              {strings.invalid.head}
+            </h1>
+            {config.reveal.link ? (
+              <p className="w-full p-4 rounded-lg text-center bg-warning text-dark text-sm">
+                {strings.invalid.warning}
+              </p>
+            ) : (
+              <></>
+            )}
+            <GenerateLink />
           </div>
         ) : (
           <div className="flex flex-col gap-4 w-full items-center">
