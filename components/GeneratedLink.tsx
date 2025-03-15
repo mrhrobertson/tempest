@@ -70,10 +70,10 @@ export default function GeneratedLink({ link, theme, date }: GLProps) {
               <button
                 onClick={() =>
                   (window.location.href = recipient
-                    ? `mailto:${email}?subject=Link for ${recipient}?body=${
+                    ? `mailto:${email}?subject=Link%20for%20${recipient}&body=${
                         recipient.split(" ")[0]
-                      },%0D%0A%0D%0APlease find your sharing link below:%0D%0A%0D%0A${link}%0D%0A%0D%0AMany thanks,`
-                    : `mailto:${email}?subject=Sharing Link?body=Hi,%0D%0A%0D%0APlease find your sharing link below:%0D%0A%0D%0A${link}%0D%0A%0D%0AMany thanks,`)
+                      },%0D%0A%0D%0APlease%20find%20your%20sharing%20link%20below:%0D%0A%0D%0A${link}%0D%0A%0D%0AMany%20thanks,`
+                    : `mailto:${email}?subject=Sharing%20Link&body=Hi,%0D%0A%0D%0APlease%20find%20your%20sharing%20link%20below:%0D%0A%0D%0A${link}%0D%0A%0D%0AMany%20thanks`)
                 }
                 className={`flex gap-2 bg-secondary-light dark:bg-secondary-dark text-secondary-text-light dark:text-secondary-text-dark hover:bg-secondary-hover-light dark:hover:bg-secondary-hover-dark hover:text-secondary-text-dark dark:hover:text-secondary-text-dark active:bg-secondary-active-light dark:active:bg-secondary-active-dark active:text-secondary-active-text-light dark:active:text-secondary-active-text-dark rounded-lg w-full py-2 items-center justify-center`}
               >
