@@ -23,7 +23,11 @@
     "clicked": "Generating..."
   },
   "generated": {
-    "head": "Your link has been generated!"
+    "head": "Your link has been generated!",
+    "email": "Want to send your link via email easily? Fill in the details below!",
+    "place_name": "Enter the recipient's name here...",
+    "place_email": "Enter the recipient's email here...",
+    "send": "Send Email"
   },
   "reveal": {
     "head": "Do you wish to reveal the content of this link?",

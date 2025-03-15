@@ -10,10 +10,36 @@ This means that Tempest can take your secrets, store them safely, and makes them
 
 ## How can I use this?
 
-You have 3 options to deploy Tempest, either:
+Tempest is containerised for modularity and scalability. It's also easy to deploy and maintain.
 
-- using Docker
-- on Vercel
-- locally
+1. Download the `compose.yml` to the directory you want to use and run `docker compose up -d`. This will build the environment out for you, and will run a un-customised version of Tempest.
+2. Tempest uses named volumes to manage all the data, so you will need to either copy files out of the container and put them back in after editing. This can be done with the following commands:
 
-> Docs are incomplete, come back later and there might be something here...
+```sh
+# For copying the files out
+docker cp $(docker compose ps -q core):/app/config ./local-config
+docker cp $(docker compose ps -q core):/app/public ./local-public
+
+# edit the files as you see fit...
+
+# For copying back in
+docker cp ./local-config/. $(docker compose ps -q core):/app/config/
+docker cp ./local-public/. $(docker compose ps -q core):/app/public/
+```
+
+3. For TLS certificates, you can bring your own proxy (BYOP) or modify the HTTP-01 challenge details (depending on your existing DNS/TLS setup, you can modify Traefik to use DNS-01/TLS-ALPN-01 challenges) in the `compose.yml`. To use HTTP challenges, change the following lines:
+
+```yaml
+- "--certificatesresolvers.letsencrypt.acme.email=your-email@example.com" # on line 13 (unlucky for some)
+- "traefik.http.routers.core.rule=Host(`your-domain.com`)" # on line 28 (in a state)
+```
+
+## Customisation
+
+> NOTE: All these changes will require a restart of the core container as the application builds on boot which is when the `config` and `public` folders are checked.
+
+To add your own logo for the favicon and the top of the interface, put a image/SVG in the `public` folder and then update `strings.generic.logo` in `strings.json` to match the relative file path. The app supports a light theme and a dark theme, so you can choose different colourways depending on the browser settings. This is also where you can update all the text in the application.
+
+You can set the default values in the app and enable/disable functionality (mailto on generated links + link generation on revealed links, multiline input, developer branding) using `config.json`.
+
+For theming and changing colours of the app, you can modify the `tailwind.config.ts` which allows you to use the Tailwind colour options, or make your own.

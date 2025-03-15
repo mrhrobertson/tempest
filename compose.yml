@@ -1,14 +1,36 @@
 name: tempest
 
 services:
+  proxy:
+    image: traefik:latest
+    container_name: proxy
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=your-email@example.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--log.level=ERROR" # only show errors, making it quieter
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
+    restart: always
   core:
     image: tempest:latest
     container_name: core
-    ports:
-      - 80:3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.core.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.core.entrypoints=websecure"
+      - "traefik.http.routers.core.tls.certresolver=letsencrypt"
     volumes:
-      - /cfg/core/config:/app/config:ro # responsible for the localisation, limits and theming of the app.
-      - /cfg/core/public:/app/public:ro # any images or static assets that need served, such as the custom logo
+      - config:/app/config:ro # responsible for the localisation, limits and theming of the app.
+      - public:/app/public:ro # any images or static assets that need served, such as the custom logo
     environment:
       - REDIS_URL=db # use name of redis container that you wish to use for storage
       - TLS=false # if not using docker, use TLS to speak to redis, such as Vercel KV (KV_URL to be supplied instead of REDIS_URL)
@@ -19,3 +41,8 @@ services:
     environment:
       - REDIS_DISABLE_COMMANDS=KEYS,FLUSHDB,FLUSHALL # stops recon/mass-destructive commands being used on REDIS
     restart: always
+
+volumes:
+  letsencrypt:
+  config:
+  public:

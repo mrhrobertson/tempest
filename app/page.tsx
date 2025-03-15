@@ -203,12 +203,13 @@ export default function Home() {
               )}
             </button>
           </form>
-          <p className="text-center mt-4">
+          <hr className="border-2 border-secondary-active-light dark:border-secondary-active-dark w-full mt-2" />
+          <p className="text-center mt-1">
             This link will expire on the {date.format("LLLL")}. The link can be
             viewed {clicks} time{clicks > 1 ? "s" : ""}.
           </p>
           {strings.generic.contact ? (
-            <p className="flex items-center justify-center text-center text-dark bg-info-primary p-4 text-xs sm:text-sm mt-3 rounded-lg w-full">
+            <p className="flex items-center justify-center text-center text-dark bg-info-primary p-4 text-xs sm:text-sm mt-1 rounded-lg w-full">
               {strings.generic.phone ? (
                 strings.generic.contact.search("<phone>") ? (
                   <span className="w-full flex flex-row items-center justify-center gap-2">

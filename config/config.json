@@ -3,7 +3,8 @@
     "amount": 2,
     "period": "d",
     "clicks": 3,
-    "branding": true
+    "branding": true,
+    "email": true
   },
   "hours": {
     "enabled": true,
