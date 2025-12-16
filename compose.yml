@@ -21,7 +21,7 @@ services:
       - letsencrypt:/letsencrypt
     restart: always
   core:
-    image: tempest:latest
+    image: mrhrobertson/tempest:latest
     container_name: core
     labels:
       - "traefik.enable=true"

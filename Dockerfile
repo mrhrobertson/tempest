@@ -1,14 +1,14 @@
-FROM node:lts-alpine
+FROM node:lts-trixie-slim
 
 RUN mkdir /app
-
-RUN chown -R node /app 
 
 WORKDIR /app
 
 COPY ./package*.json ./
 
 COPY ./ ./
+
+RUN chown -R node /app 
 
 RUN npm install
 
