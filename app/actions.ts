@@ -31,10 +31,7 @@ const TIME_CONVERSION: { [id: string]: number } = {
 };
 
 const REDIS_CFG = {
-  url: process.env.REDIS_URL?.includes("redis://")
-    ? process.env.REDIS_URL
-    : `redis://${process.env.REDIS_URL}:6379`,
-  socket: { tls: process.env.TLS ? process.env.TLS : true },
+  url: process.env.REDIS_URL,
 };
 
 export async function submit(payload: SubmitPayload) {

@@ -33,7 +33,6 @@ services:
       - public:/app/public:ro # any images or static assets that need served, such as the custom logo
     environment:
       - REDIS_URL=db # use name of redis container that you wish to use for storage
-      - TLS=false # if not using docker, use TLS to speak to redis, such as Vercel KV (KV_URL to be supplied instead of REDIS_URL)
     restart: always
   db:
     image: redis:latest
